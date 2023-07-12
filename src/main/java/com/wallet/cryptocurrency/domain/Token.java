@@ -43,9 +43,9 @@ public class Token {
     @Column(name = "MARKET_CAP")
     private BigDecimal marketCap;
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "tokenList")
+    @ManyToMany( mappedBy = "tokenList")
     private List<Wallet> walletList = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "tokenList")
+    @ManyToMany( mappedBy = "tokenList")
     private List<WishList> wishLists = new ArrayList<>();
 }
