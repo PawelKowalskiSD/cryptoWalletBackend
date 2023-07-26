@@ -4,31 +4,28 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Collection;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class UserDto {
+
+    private Long userId;
     private String firstname;
     private String lastname;
-    private String nickName;
+    private String username;
     private String password;
     private String mailAddressee;
-    private boolean isRegistration;
-    private boolean isLogged;
-    private boolean isExtraKey;
+    private String roleName;
 
-
-    public UserDto(String password, String mailAddressee, boolean isRegistration, boolean isLogged, boolean isExtraKey) {
+    public UserDto(Long userId, String firstname, String lastname, String username, String password, String mailAddressee) {
+        this.userId = userId;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.username = username;
         this.password = password;
         this.mailAddressee = mailAddressee;
-        this.isRegistration = isRegistration;
-        this.isLogged = isLogged;
-        this.isExtraKey = isExtraKey;
     }
-
-    public UserDto(boolean isLogged) {
-        this.isLogged = isLogged;
-    }
-
 }

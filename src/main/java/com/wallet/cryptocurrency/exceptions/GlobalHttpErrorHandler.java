@@ -16,7 +16,22 @@ public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<Object> handleUserAccountExistsException(AccountExistsException exception) {
-        return new ResponseEntity<>("Account with the given e-mail address already exists," +
+        return new ResponseEntity<>("Account with the given e-mail address already exists, " +
                                             "please enter another e-mail address or go to login", HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<Object> handlerUserAlreadyLoggedException(AlreadyLoggedException exception) {
+        return new ResponseEntity<>("You are already logged in", HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<Object> handleUserIsLogout(UserIsLogoutException exception) {
+        return new ResponseEntity<>("denied, you must log in", HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<Object> handleUserTryLogin(LoginToAccountException exception) {
+        return new ResponseEntity<>("Wrong, password or wrong e-mail, please try again", HttpStatus.UNAUTHORIZED);
     }
 }

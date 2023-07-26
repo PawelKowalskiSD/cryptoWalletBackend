@@ -1,4 +1,4 @@
-package com.wallet.cryptocurrency.domain;
+package com.wallet.cryptocurrency.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -16,17 +16,12 @@ import java.util.List;
 @Table(name = "WALLET")
 public class Wallet {
     @Id
-    @GeneratedValue
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "WALLET_ID")
     private Long walletId;
 
     @Column(name = "WALLET_NAME")
     private String walletName;
-
-    @OneToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "WALLET_STATS_ID")
-    private WalletStats walletStats;
 
     @ManyToOne
     @JoinColumn(name = "USER_ID")
@@ -36,7 +31,12 @@ public class Wallet {
     @JoinTable(
             name = "JOIN_TOKEN_WALLET",
             joinColumns = {@JoinColumn(name = "WALLET_ID", referencedColumnName = "WALLET_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "TOKEN_ID", referencedColumnName = "TOKEN_ID")}
+            inverseJoinColumns = {@JoinColumn(name = "COIN_ID", referencedColumnName = "COIN_ID")}
     )
-    private List<Token> tokenList = new ArrayList<>();
+    private List<Coin> coinList = new ArrayList<>();
+
+    public Wallet(String walletName, User user) {
+        this.walletName = walletName;
+        this.user = user;
+    }
 }

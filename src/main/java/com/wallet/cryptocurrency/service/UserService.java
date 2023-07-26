@@ -1,10 +1,12 @@
 package com.wallet.cryptocurrency.service;
 
-import com.wallet.cryptocurrency.domain.User;
-import com.wallet.cryptocurrency.exceptions.AccountExistsException;
+import com.wallet.cryptocurrency.dto.UserDto;
+import com.wallet.cryptocurrency.entity.Role;
+import com.wallet.cryptocurrency.entity.User;
 import com.wallet.cryptocurrency.exceptions.UserNotFoundException;
 import com.wallet.cryptocurrency.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -14,9 +16,21 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final RoleService roleService;
 
     public User getUserAccount(Long userId) throws UserNotFoundException {
         return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+    }
+
+    public void createUser(User user) throws Exception {
+        Role role = roleService.findRoleByName("user");
+
+        user.setFirstname(user.getFirstname());
+        user.setLastname(user.getLastname());
+        user.setUsername(user.getUsername());
+        user.setPassword(user.getPassword());
+        user.setMailAddressee(user.getMailAddressee());
+        user.setRole(role);
     }
 
     public User saveUserAccount(User user) {

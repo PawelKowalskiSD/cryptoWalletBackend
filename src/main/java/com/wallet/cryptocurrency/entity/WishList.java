@@ -1,4 +1,4 @@
-package com.wallet.cryptocurrency.domain;
+package com.wallet.cryptocurrency.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -18,8 +18,7 @@ import java.util.List;
 public class WishList {
 
     @Id
-    @GeneratedValue
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "WISH_LIST_ID")
     private Long wishListId;
 
@@ -40,7 +39,7 @@ public class WishList {
     @JoinTable(
             name = "JOIN_TOKEN_WISH_LIST",
             joinColumns = {@JoinColumn(name = "WISH_LIST_ID", referencedColumnName = "WISH_LIST_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "TOKEN_ID", referencedColumnName = "TOKEN_ID")}
+            inverseJoinColumns = {@JoinColumn(name = "COIN_ID", referencedColumnName = "COIN_ID")}
     )
-    private List<Token> tokenList = new ArrayList<>();
+    private List<Coin> coinList = new ArrayList<>();
 }

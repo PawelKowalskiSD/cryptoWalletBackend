@@ -9,4 +9,5 @@ import lombok.NoArgsConstructor;
 @Data
 public class WalletDto {
     private String walletName;
+    private Long userId;
 }

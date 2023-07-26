@@ -1,6 +1,6 @@
 package com.wallet.cryptocurrency.repository;
 
-import com.wallet.cryptocurrency.domain.User;
+import com.wallet.cryptocurrency.entity.User;
 import jakarta.transaction.Transactional;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
