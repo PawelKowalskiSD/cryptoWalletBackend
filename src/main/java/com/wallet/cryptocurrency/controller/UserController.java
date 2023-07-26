@@ -2,7 +2,6 @@ package com.wallet.cryptocurrency.controller;
 
 import com.wallet.cryptocurrency.dto.UserDto;
 import com.wallet.cryptocurrency.entity.User;
-import com.wallet.cryptocurrency.exceptions.AccountExistsException;
 import com.wallet.cryptocurrency.exceptions.UserNotFoundException;
 import com.wallet.cryptocurrency.mapper.UserMapper;
 import com.wallet.cryptocurrency.service.UserService;

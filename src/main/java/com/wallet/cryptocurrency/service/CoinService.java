@@ -32,14 +32,11 @@ public class CoinService {
 
     public Coin saveCoin(Coin coin) {
         return coinRepository.save(coin);
-        // Logika zapisu tokenu do bazy danych (np. za pomocą repozytorium JPA)
     }
 
     public Coin getTokenBySymbolFromApi(String symbol, BigDecimal quantity, Wallet walletList) {
-        // Wykonaj żądanie HTTP do CoinGecko API, aby pobrać informacje o tokenie na podstawie symbolu
 
-        // Przykładowa implementacja żądania HTTP (może wymagać dodatkowych importów)
-        String apiUrl = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=" + symbol;
+        String apiUrl = COINGECKO_API_BASE_URL + "/coins/markets?vs_currency=usd&ids=" + symbol;
         RestTemplate restTemplate = new RestTemplate();
         CoinDataDto[] tokenData = restTemplate.getForObject(apiUrl, CoinDataDto[].class);
 
@@ -53,7 +50,7 @@ public class CoinService {
             coin.setUrlImages(coinDataDto.getImage());
             walletList.getCoinList().add(coin);
             System.out.println(coin);
-            // Ustawienie innych pól w obiekcie tokena na podstawie odpowiedzi z API CoinGecko
+
             coinRepository.save(coin);
 
             return coin;
