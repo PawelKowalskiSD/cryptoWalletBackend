@@ -27,7 +27,7 @@ public class Coin {
     @Column(name = "SYMBOL")
     private String symbol;
 
-    @Column(name = "QUANTITY", precision = 15, scale = 10)
+    @Column(name = "QUANTITY", precision = 15, scale = 101)
     private BigDecimal quantity;
 
     @Column(name = "URL_IMAGES")

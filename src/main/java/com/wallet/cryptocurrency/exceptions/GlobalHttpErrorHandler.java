@@ -11,7 +11,7 @@ public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException exception) {
-        return new ResponseEntity<>("User with given id doesn't exist", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("User with given id doesn't exist", HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
@@ -33,5 +33,10 @@ public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<Object> handleUserTryLogin(LoginToAccountException exception) {
         return new ResponseEntity<>("Wrong, password or wrong e-mail, please try again", HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<Object> handlerWalletNotFoundException(WalletNotFoundException exception) {
+        return new ResponseEntity<>("Wallet not exist", HttpStatus.NOT_FOUND);
     }
 }

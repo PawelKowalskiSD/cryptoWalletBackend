@@ -12,4 +12,7 @@ import java.util.Optional;
 public interface WalletRepository extends CrudRepository<Wallet, Long> {
     @Override
     Optional<Wallet> findById(Long id);
+
+    @Override
+    void deleteById(Long id);
 }

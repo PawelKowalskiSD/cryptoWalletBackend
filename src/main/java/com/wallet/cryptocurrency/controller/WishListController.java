@@ -2,6 +2,7 @@ package com.wallet.cryptocurrency.controller;
 
 import com.wallet.cryptocurrency.dto.WishListDto;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -12,8 +13,9 @@ import java.util.List;
 public class WishListController {
 
     @GetMapping
-    public List<WishListDto> getWishLists() {
-        return new ArrayList();
+    public ResponseEntity<List<WishListDto>> getWishLists() {
+
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping(value = "/{wishListId}")

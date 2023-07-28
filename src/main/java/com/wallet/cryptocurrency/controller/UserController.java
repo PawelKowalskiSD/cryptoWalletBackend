@@ -8,6 +8,7 @@ import com.wallet.cryptocurrency.service.UserService;
 import com.wallet.cryptocurrency.validator.UserValidator;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,13 @@ public class UserController {
         User user = userMapper.mapToUser(userDto);
         userService.createUser(user);
         userService.saveUserAccount(user);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping(value = "LogIn")
+    public ResponseEntity<Void> logIn(@RequestBody UserDto userDto) throws Exception {
+        User user = userMapper.mapToUser(userDto);
+
         return ResponseEntity.ok().build();
     }
 
