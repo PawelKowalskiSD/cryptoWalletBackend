@@ -1,39 +1,34 @@
 package com.wallet.cryptocurrency.service;
 
-import com.wallet.cryptocurrency.dto.UserDto;
-import com.wallet.cryptocurrency.entity.Role;
+import com.wallet.cryptocurrency.domain.Role;
 import com.wallet.cryptocurrency.entity.User;
 import com.wallet.cryptocurrency.exceptions.UserNotFoundException;
 import com.wallet.cryptocurrency.repository.UserRepository;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
-
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
-    private final RoleService roleService;
+    private final PasswordEncoder passwordEncoder;
 
     public User getUserAccount(Long userId) throws UserNotFoundException {
         return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
     }
 
-    public void createUser(User user) throws Exception {
-        Role role = roleService.findRoleByName("user");
-
+    public void createUser(User user) throws MessagingException {
         user.setFirstname(user.getFirstname());
         user.setLastname(user.getLastname());
         user.setUsername(user.getUsername());
-        user.setPassword(user.getPassword());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setMailAddressee(user.getMailAddressee());
-        user.setRole(role);
-    }
+        user.setRole(Role.USER.toString());
 
-    public void logInToAccount(User user) {
+        userRepository.save(user);
     }
 
     public User saveUserAccount(User user) {
@@ -44,8 +39,7 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
-    public Optional<User> findUserAccountByMailAddressee(String user) {
-        return userRepository.findByMailAddressee(user);
-
+    public User findUserAccountByUsername(String username) throws UserNotFoundException {
+        return userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
     }
 }

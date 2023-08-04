@@ -6,8 +6,6 @@ import com.wallet.cryptocurrency.repository.WalletRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 @Service
 public class WalletService {

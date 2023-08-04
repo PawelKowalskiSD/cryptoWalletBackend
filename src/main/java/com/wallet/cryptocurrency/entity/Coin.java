@@ -1,7 +1,6 @@
 package com.wallet.cryptocurrency.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,16 +26,16 @@ public class Coin {
     @Column(name = "SYMBOL")
     private String symbol;
 
-    @Column(name = "QUANTITY", precision = 15, scale = 101)
+    @Column(name = "QUANTITY", precision = 15, scale = 10)
     private BigDecimal quantity;
 
     @Column(name = "URL_IMAGES")
     private String urlImages;
 
-    @ManyToMany( mappedBy = "coinList")
+    @ManyToMany(mappedBy = "coinList")
     private List<Wallet> walletList = new ArrayList<>();
 
-    @ManyToMany( mappedBy = "coinList")
+    @ManyToMany(mappedBy = "coinList")
     private List<WishList> wishLists = new ArrayList<>();
 
 }

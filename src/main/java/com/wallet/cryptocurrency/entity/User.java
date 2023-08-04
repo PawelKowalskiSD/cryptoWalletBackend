@@ -1,11 +1,17 @@
 package com.wallet.cryptocurrency.entity;
 
+import com.wallet.cryptocurrency.domain.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @AllArgsConstructor
@@ -13,7 +19,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "USER")
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "USER_ID")
@@ -23,7 +29,7 @@ public class User {
     @Column(name = "LASTNAME")
     private String lastname;
 
-    @Column(name = "USERNAME")
+    @Column(name = "USERNAME", unique = true)
     private String username;
 
     @Column(name = "PASSWORD")
@@ -32,13 +38,11 @@ public class User {
     @Column(name = "MAIL_ADDRESSEE", unique = true)
     private String mailAddressee;
 
-    @Column(name = "IS_REGISTRATION")
-    private boolean isRegistration;
+    @Column(name = "IS_ENABLED")
+    private boolean isEnabled;
 
-    @ManyToOne
-    @JoinColumn(name = "ROLE_ID")
-    private Role role;
-
+    @Column(name = "ROLE")
+    private String role;
 
     @OneToMany(
             targetEntity = WishList.class,
@@ -54,7 +58,7 @@ public class User {
     )
     private List<Wallet> walletList = new ArrayList<>();
 
-    public User(Long userId, String firstname, String lastname, String username, String password, String mailAddressee, Role role) {
+    public User(Long userId, String firstname, String lastname, String username, String password, String mailAddressee, String role) {
         this.userId = userId;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -62,5 +66,43 @@ public class User {
         this.password = password;
         this.mailAddressee = mailAddressee;
         this.role = role;
+    }
+
+    public User(Long userId, String username, String password, String role) {
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
+    public User(String username, String password, String role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singleton(new SimpleGrantedAuthority(role));
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return isEnabled;
     }
 }
