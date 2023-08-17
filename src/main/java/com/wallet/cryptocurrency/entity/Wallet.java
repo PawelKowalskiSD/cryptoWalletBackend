@@ -39,4 +39,15 @@ public class Wallet {
         this.walletName = walletName;
         this.user = user;
     }
+
+    public Wallet(Long walletId, String walletName, User user) {
+        this.walletId = walletId;
+        this.walletName = walletName;
+        this.user = user;
+    }
+
+    public Wallet(Long walletId, String walletName) {
+        this.walletId = walletId;
+        this.walletName = walletName;
+    }
 }

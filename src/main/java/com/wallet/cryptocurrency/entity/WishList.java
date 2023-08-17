@@ -42,4 +42,12 @@ public class WishList {
             inverseJoinColumns = {@JoinColumn(name = "COIN_ID", referencedColumnName = "COIN_ID")}
     )
     private List<Coin> coinList = new ArrayList<>();
+
+    public WishList(Long wishListId, String wishListName, BigDecimal quantity, BigDecimal priceTarget, User user) {
+        this.wishListId = wishListId;
+        this.wishListName = wishListName;
+        this.quantity = quantity;
+        this.priceTarget = priceTarget;
+        this.user = user;
+    }
 }

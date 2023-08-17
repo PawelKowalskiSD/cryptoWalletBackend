@@ -5,6 +5,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Transactional
@@ -15,4 +16,7 @@ public interface WalletRepository extends CrudRepository<Wallet, Long> {
 
     @Override
     void deleteById(Long id);
+
+    @Override
+    List<Wallet> findAll();
 }

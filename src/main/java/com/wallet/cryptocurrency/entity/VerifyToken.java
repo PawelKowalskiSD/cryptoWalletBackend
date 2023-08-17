@@ -20,6 +20,7 @@ public class VerifyToken {
     private String value;
 
     @OneToOne
+    @JoinColumn(name = "USER_ID")
     private User user;
 
     public VerifyToken(String value, User user) {

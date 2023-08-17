@@ -18,7 +18,6 @@ public class MailSenderService {
     private final JavaMailSender javaMailSender;
     private final MailCreatorService mailCreatorService;
 
-
     public void sendMailAccountActivation(final Mail mail, VerifyToken verifyToken) {
         log.info("Starting email preparation...");
         try {

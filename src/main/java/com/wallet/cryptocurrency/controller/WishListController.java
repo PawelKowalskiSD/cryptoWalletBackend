@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@RequestMapping("/v1/wishLists")
+@RequestMapping("/wish-lists")
 @RestController
 public class WishListController {
 
@@ -23,7 +23,7 @@ public class WishListController {
         return new WishListDto();
     }
 
-    @PostMapping(value = "/createWishList", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/create-wish-list", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void createWishList(@RequestBody WishListDto wishListDto) {
     }
 

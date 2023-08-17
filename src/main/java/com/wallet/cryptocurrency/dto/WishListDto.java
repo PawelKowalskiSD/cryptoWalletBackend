@@ -10,7 +10,9 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Data
 public class WishListDto {
+    private Long wishListId;
     private String wishListName;
     private BigDecimal quantity;
     private BigDecimal priceTarget;
+    private Long userId;
 }

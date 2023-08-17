@@ -1,6 +1,5 @@
 package com.wallet.cryptocurrency.entity;
 
-import com.wallet.cryptocurrency.domain.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -57,6 +56,8 @@ public class User implements UserDetails {
             fetch = FetchType.LAZY
     )
     private List<Wallet> walletList = new ArrayList<>();
+    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private VerifyToken verifyToken;
 
     public User(Long userId, String firstname, String lastname, String username, String password, String mailAddressee, String role) {
         this.userId = userId;
@@ -79,6 +80,15 @@ public class User implements UserDetails {
         this.username = username;
         this.password = password;
         this.role = role;
+    }
+
+    public User(Long userId) {
+        this.userId = userId;
+    }
+
+    public void addWallet(Wallet wallet) {
+        walletList.add(wallet);
+        wallet.setUser(this);
     }
 
     @Override

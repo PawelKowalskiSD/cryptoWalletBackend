@@ -1,25 +1,33 @@
 package com.wallet.cryptocurrency.controller;
 
 import com.wallet.cryptocurrency.dto.WalletDto;
+import com.wallet.cryptocurrency.entity.User;
 import com.wallet.cryptocurrency.entity.Wallet;
 import com.wallet.cryptocurrency.exceptions.UserNotFoundException;
 import com.wallet.cryptocurrency.exceptions.WalletNotFoundException;
 import com.wallet.cryptocurrency.mapper.WalletMapper;
+import com.wallet.cryptocurrency.service.UserService;
 import com.wallet.cryptocurrency.service.WalletService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 @RequiredArgsConstructor
-@RequestMapping("/v1/wallet")
+@RequestMapping("/wallets")
 @RestController
 public class WalletController {
 
     private final WalletMapper walletMapper;
     private final WalletService walletService;
+
+    private final UserService userService;
+
+
 
     @GetMapping
     public List<WalletDto> getWalletList(){
@@ -32,10 +40,14 @@ public class WalletController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> createWallet(@RequestBody WalletDto walletDto) throws UserNotFoundException {
+    @PostMapping("/create-wallet/{userId}")
+    public ResponseEntity<Void> createWallet(@RequestBody WalletDto walletDto, @PathVariable Long userId) throws UserNotFoundException {
+        User user = userService.findUserAccountById(userId);
         Wallet wallet = walletMapper.mapToWallet(walletDto);
+        user.addWallet(wallet);
+
         walletService.walletSave(wallet);
+
         return ResponseEntity.ok().build();
     }
 

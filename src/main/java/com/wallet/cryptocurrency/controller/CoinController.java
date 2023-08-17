@@ -19,19 +19,16 @@ import java.math.RoundingMode;
 import java.util.List;
 
 @RequiredArgsConstructor
-@RequestMapping("/v1/token")
+@RequestMapping("/coins")
 @RestController
 public class CoinController {
 
     private final CoinGeckoClient coinGeckoClient;
-
     private final CoinService coinService;
-
     private final CoinMapper coinMapper;
-
     private final WalletService walletService;
 
-    @GetMapping("/{tokenId}")
+    @GetMapping("/{coinId}")
     public ResponseEntity<CoinDto> getToken(@PathVariable String tokenId) {
         CoinDto coinDto = coinGeckoClient.searchToken(tokenId);
         if (coinDto != null && coinDto.getCoinDataDto() != null && coinDto.getCoinDataDto().length > 0) {
@@ -41,7 +38,7 @@ public class CoinController {
         }
     }
 
-    @PostMapping(value = "/{walletId}/addToken",consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/{walletId}/add-coin",consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> addTokenBySymbol(@PathVariable Long walletId, @RequestBody CoinDataDto coinDataDtoDto) {
         try {
             Wallet wallet = walletService.findWalletById(walletId);
@@ -53,9 +50,9 @@ public class CoinController {
                 System.out.println(coinDataDtoDto);
                 coinService.saveCoin(coin);
                 System.out.println(coin);
-                return ResponseEntity.ok("Token added successfully");
+                return ResponseEntity.ok("Coin added successfully");
             } else {
-                return ResponseEntity.badRequest().body("Token not found");
+                return ResponseEntity.badRequest().body("Coin not found");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,7 +60,7 @@ public class CoinController {
         }
     }
 
-    @PostMapping(value = "/deleteToken", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/delete-coin", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void sellToken(@RequestBody CoinDataDto coinDataDto) {
     }
 

@@ -6,6 +6,8 @@ import com.wallet.cryptocurrency.repository.WalletRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class WalletService {
@@ -26,5 +28,9 @@ public class WalletService {
 
     public void deleteWalletById(Long walletId) {
         walletRepository.deleteById(walletId);
+    }
+
+    public List<Wallet> findAllWallet() {
+        return walletRepository.findAll();
     }
 }

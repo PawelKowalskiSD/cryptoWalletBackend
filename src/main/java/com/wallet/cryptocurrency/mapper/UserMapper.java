@@ -1,17 +1,15 @@
 package com.wallet.cryptocurrency.mapper;
 
-import com.wallet.cryptocurrency.domain.Role;
 import com.wallet.cryptocurrency.entity.User;
 import com.wallet.cryptocurrency.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 @RequiredArgsConstructor
 @Service
 public class UserMapper {
 
-
-    public User mapToUser(final UserDto userDto) throws Exception {
-
+    public User mapToUser(final UserDto userDto) {
         return new User(
                 userDto.getUserId(),
                 userDto.getFirstname(),
@@ -19,12 +17,11 @@ public class UserMapper {
                 userDto.getUsername(),
                 userDto.getPassword(),
                 userDto.getMailAddressee(),
-                userDto.getRoleName()
+                userDto.getRole()
         );
     }
 
     public UserDto mapToUserDto(final User user) {
-
         return new UserDto(
                 user.getUserId(),
                 user.getFirstname(),

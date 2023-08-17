@@ -18,7 +18,7 @@ public class MailCreatorService {
         Context context = new Context();
         context.setVariable("message", message);
         context.setVariable("config", configApp);
-        context.setVariable("url", "cryptoWallet/verify?token=");
+        context.setVariable("url", "auth/verify?token=");
         context.setVariable("verifyToken", verifyToken.getValue());
         return templateEngine.process("verify-token-mail.html", context);
     }

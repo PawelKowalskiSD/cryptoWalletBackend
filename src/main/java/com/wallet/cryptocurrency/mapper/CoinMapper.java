@@ -11,10 +11,8 @@ public class CoinMapper {
         Coin coin = new Coin();
         coin.setTokenName(coinDataDto.getTokenName());
         coin.setSymbol(coinDataDto.getSymbol());
-
         return coin;
     }
-
     public CoinDataDto mapToTokenDto(final Coin coin) {
         return new CoinDataDto(
                 coin.getTokenName(),

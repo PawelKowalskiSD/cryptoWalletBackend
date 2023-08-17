@@ -1,0 +1,19 @@
+package com.wallet.cryptocurrency.domain;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+
+@Data
+@Builder
+@AllArgsConstructor
+public class AuthResponse {
+
+    @JsonProperty("username")
+    private String username;
+    @JsonProperty("token")
+    private String accessToken;
+
+
+}

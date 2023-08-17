@@ -1,12 +1,8 @@
 package com.wallet.cryptocurrency.dto;
 
-import com.wallet.cryptocurrency.domain.Role;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Collection;
 
 
 @AllArgsConstructor
@@ -20,14 +16,5 @@ public class UserDto {
     private String username;
     private String password;
     private String mailAddressee;
-    private String roleName;
-
-    public UserDto(Long userId, String firstname, String lastname, String username, String password, String mailAddressee) {
-        this.userId = userId;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.username = username;
-        this.password = password;
-        this.mailAddressee = mailAddressee;
-    }
+    private String role;
 }

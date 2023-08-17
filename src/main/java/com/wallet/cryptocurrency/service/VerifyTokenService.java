@@ -19,9 +19,12 @@ public class VerifyTokenService {
     private final MailSenderService mailSenderService;
 
     public void verifyToken(String token) {
-        User user = verifyTokenRepository.findByValue(token).getUser();
-        user.setEnabled(true);
-        userRepository.save(user);
+        VerifyToken verifyToken = verifyTokenRepository.findByValue(token);
+        if (verifyToken != null) {
+            User user = verifyToken.getUser();
+            user.setEnabled(true);
+            userRepository.save(user);
+        }
     }
 
     public void createAndSaveToken(User user) {
