@@ -3,6 +3,7 @@ package com.wallet.cryptocurrency.service;
 import com.wallet.cryptocurrency.domain.Role;
 import com.wallet.cryptocurrency.dto.UserDto;
 import com.wallet.cryptocurrency.entity.User;
+import com.wallet.cryptocurrency.entity.Wallet;
 import com.wallet.cryptocurrency.exceptions.UserNotFoundException;
 import com.wallet.cryptocurrency.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -43,14 +44,12 @@ public class UserService {
             if (userDto.getFirstname() != null) {
                 user.setFirstname(userDto.getFirstname());
             }
-
             if (userDto.getLastname() != null) {
                 user.setLastname(userDto.getLastname());
             }
             if (userDto.getPassword() != null) {
                 user.setPassword(passwordEncoder.encode(userDto.getPassword()));
             }
-
             if (userDto.getMailAddressee() != null) {
                 user.setMailAddressee(userDto.getMailAddressee());
             }

@@ -11,12 +11,10 @@ import com.wallet.cryptocurrency.service.WalletService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
+
 @RequiredArgsConstructor
 @RequestMapping("/wallets")
 @RestController
@@ -24,39 +22,30 @@ public class WalletController {
 
     private final WalletMapper walletMapper;
     private final WalletService walletService;
-
     private final UserService userService;
 
-
-
     @GetMapping
-    public List<WalletDto> getWalletList(){
-        return new ArrayList<>();
+    public ResponseEntity<List<WalletDto>> getWalletList() {
+        return ResponseEntity.ok().body(walletMapper.mapToWalletsDto(walletService.findAllWallet()));
     }
 
     @GetMapping(value = "/{walletId}")
     public ResponseEntity<WalletDto> getWallet(@PathVariable Long walletId) throws WalletNotFoundException {
-        walletService.findWalletById(walletId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(walletMapper.mapToWalletDto(walletService.findWalletById(walletId)));
     }
 
-    @PostMapping("/create-wallet/{userId}")
+    @PostMapping("/create-wallets/{userId}")
     public ResponseEntity<Void> createWallet(@RequestBody WalletDto walletDto, @PathVariable Long userId) throws UserNotFoundException {
         User user = userService.findUserAccountById(userId);
         Wallet wallet = walletMapper.mapToWallet(walletDto);
-        user.addWallet(wallet);
-
-        walletService.walletSave(wallet);
-
+        walletService.addWalletToUSer(user, wallet);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<WalletDto> updateWallet(@RequestBody WalletDto walletDto) throws UserNotFoundException {
-        Wallet wallet = walletMapper.mapToWallet(walletDto);
-        walletService.editWallet(wallet);
-        walletService.walletSave(wallet);
-        return ResponseEntity.ok().build();
+    @PatchMapping(value = "/{walletId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<WalletDto> updateWallet(@RequestBody WalletDto walletDto, @PathVariable Long walletId) throws WalletNotFoundException {
+        Wallet wallet = walletService.findWalletById(walletId);
+        return ResponseEntity.ok().body(walletMapper.mapToWalletDto(walletService.editWallet(wallet, walletDto)));
     }
 
     @DeleteMapping(value = "/{walletId}")
@@ -64,5 +53,4 @@ public class WalletController {
         walletService.deleteWalletById(walletId);
         return ResponseEntity.ok().build();
     }
-
 }

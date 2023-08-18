@@ -86,11 +86,6 @@ public class User implements UserDetails {
         this.userId = userId;
     }
 
-    public void addWallet(Wallet wallet) {
-        walletList.add(wallet);
-        wallet.setUser(this);
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(new SimpleGrantedAuthority(role));

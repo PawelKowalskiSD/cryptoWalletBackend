@@ -33,8 +33,16 @@ public class WalletMapper {
     }
 
     public Wallet mapToWallet(final WalletDto walletDto) throws UserNotFoundException {
-        return new Wallet(walletDto.getWalletId(),
+        return new Wallet(
+                walletDto.getWalletId(),
                 walletDto.getWalletName()
                 );
+    }
+
+    public WalletDto mapToWalletDto(final Wallet wallet) {
+        return new WalletDto(
+                wallet.getWalletId(),
+                wallet.getWalletName(),
+                wallet.getUser().getUserId());
     }
 }
