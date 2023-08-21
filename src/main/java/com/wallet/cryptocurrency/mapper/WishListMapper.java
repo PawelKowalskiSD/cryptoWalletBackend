@@ -11,15 +11,30 @@ import java.util.stream.Collectors;
 @Service
 public class WishListMapper {
 
-    public List<WishList> mapToWishList(final List<WishListDto> wishListDto) {
+    public List<WishList> mapToWishLists(final List<WishListDto> wishListDto) {
         return wishListDto.stream()
-                .map(wishList -> new WishList(wishList.getWishListId(), wishList.getWishListName(), wishList.getQuantity(), wishList.getPriceTarget(), new User(wishList.getUserId())))
+                .map(wishList -> new WishList(wishList.getWishListId(), wishList.getWishListName(), new User(wishList.getUserId())))
                 .collect(Collectors.toList());
     }
 
-    public List<WishListDto> mapToWishListDto(final List<WishList> wishLists) {
+    public List<WishListDto> mapToWishListsDto(final List<WishList> wishLists) {
         return wishLists.stream()
-                .map(wishList -> new WishListDto(wishList.getWishListId(), wishList.getWishListName(), wishList.getQuantity(), wishList.getPriceTarget(), wishList.getWishListId()))
+                .map(wishList -> new WishListDto(wishList.getWishListId(), wishList.getWishListName(), wishList.getUser().getUserId()))
                 .collect(Collectors.toList());
+    }
+
+    public WishList mapToWishlist(final WishListDto wishListDto) {
+        return new WishList(
+                wishListDto.getWishListId(),
+                wishListDto.getWishListName()
+        );
+    }
+
+    public WishListDto mapToWishListDto(final WishList wishList) {
+        return new WishListDto(
+                wishList.getWishListId(),
+                wishList.getWishListName(),
+                wishList.getUser().getUserId()
+        );
     }
 }

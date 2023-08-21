@@ -28,11 +28,11 @@ public class WalletMapper {
 
     public List<WalletDto> mapToWalletsDto(final List<Wallet> wallets) {
         return wallets.stream()
-                .map((wallet -> new WalletDto(wallet.getWalletId(), wallet.getWalletName(), wallet.getWalletId())))
+                .map((wallet -> new WalletDto(wallet.getWalletId(), wallet.getWalletName(), wallet.getUser().getUserId())))
                 .collect(Collectors.toList());
     }
 
-    public Wallet mapToWallet(final WalletDto walletDto) throws UserNotFoundException {
+    public Wallet mapToWallet(final WalletDto walletDto) {
         return new Wallet(
                 walletDto.getWalletId(),
                 walletDto.getWalletName()

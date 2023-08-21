@@ -28,7 +28,7 @@ public class DashboardFacade {
 
         List<DashboardDto> dashboardDtoList = new ArrayList<>();
 
-        dashboardDtoList.add(new DashboardDto(walletMapper.mapToWalletsDto(wallets), wishListMapper.mapToWishListDto(wishLists)));
+        dashboardDtoList.add(new DashboardDto(walletMapper.mapToWalletsDto(wallets), wishListMapper.mapToWishListsDto(wishLists)));
 
         return dashboardDtoList;
     }

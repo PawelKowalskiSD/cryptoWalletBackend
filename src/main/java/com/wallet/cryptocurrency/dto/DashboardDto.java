@@ -7,6 +7,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class DashboardDto {
-    private List<WalletDto> walletList;
-    private List<WishListDto> wishListList;
+    private List<WalletDto> wallets;
+    private List<WishListDto> wishLists;
 }

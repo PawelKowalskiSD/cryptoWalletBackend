@@ -1,12 +1,10 @@
 package com.wallet.cryptocurrency.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,13 +22,6 @@ public class WishList {
 
     @Column(name = "WISH_LIST_NAME")
     private String wishListName;
-
-    @Column(name = "QUANTITY")
-    private BigDecimal quantity;
-
-    @Column(name = "PRICE_TARGET")
-    private BigDecimal priceTarget;
-
     @ManyToOne
     @JoinColumn(name = "USER_ID")
     private User user;
@@ -43,11 +34,14 @@ public class WishList {
     )
     private List<Coin> coinList = new ArrayList<>();
 
-    public WishList(Long wishListId, String wishListName, BigDecimal quantity, BigDecimal priceTarget, User user) {
+    public WishList(Long wishListId, String wishListName) {
         this.wishListId = wishListId;
         this.wishListName = wishListName;
-        this.quantity = quantity;
-        this.priceTarget = priceTarget;
+    }
+
+    public WishList(Long wishListId, String wishListName, User user) {
+        this.wishListId = wishListId;
+        this.wishListName = wishListName;
         this.user = user;
     }
 }

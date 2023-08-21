@@ -16,10 +16,6 @@ public class WalletService {
 
     private final WalletRepository walletRepository;
 
-    public Wallet walletSave(Wallet wallet) {
-        return walletRepository.save(wallet);
-    }
-
     public Wallet findWalletById(Long id) throws WalletNotFoundException {
         return walletRepository.findById(id).orElseThrow(WalletNotFoundException::new);
     }
@@ -41,9 +37,8 @@ public class WalletService {
         return walletRepository.findAll();
     }
 
-    public void addWalletToUSer(User user, Wallet wallet) {
+    public void addWalletToUserAccount(User user, Wallet wallet) {
         wallet.setUser(user);
-        user.getWalletList().add(wallet);
         walletRepository.save(wallet);
     }
 

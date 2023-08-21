@@ -38,7 +38,7 @@ public class WalletController {
     public ResponseEntity<Void> createWallet(@RequestBody WalletDto walletDto, @PathVariable Long userId) throws UserNotFoundException {
         User user = userService.findUserAccountById(userId);
         Wallet wallet = walletMapper.mapToWallet(walletDto);
-        walletService.addWalletToUSer(user, wallet);
+        walletService.addWalletToUserAccount(user, wallet);
         return ResponseEntity.ok().build();
     }
 
