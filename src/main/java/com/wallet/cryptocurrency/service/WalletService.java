@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -40,6 +41,10 @@ public class WalletService {
     public void addWalletToUserAccount(User user, Wallet wallet) {
         wallet.setUser(user);
         walletRepository.save(wallet);
+    }
+
+    public List<Wallet> findWalletsByUserId(Long id) {
+        return walletRepository.findAllByUser_UserId(id);
     }
 
 }

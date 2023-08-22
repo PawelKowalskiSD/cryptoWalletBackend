@@ -27,7 +27,7 @@ public class JwtService {
                 new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
         User user = (User) authenticate.getPrincipal();
 
-        Algorithm algorithm = Algorithm.HMAC256("secret");
+        Algorithm algorithm = Algorithm.HMAC512("secret");
         String token = JWT.create()
                 .withClaim("id", user.getUserId())
                 .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))

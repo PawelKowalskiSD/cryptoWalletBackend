@@ -19,4 +19,6 @@ public interface WalletRepository extends CrudRepository<Wallet, Long> {
 
     @Override
     List<Wallet> findAll();
+
+    List<Wallet> findAllByUser_UserId(Long id);
 }

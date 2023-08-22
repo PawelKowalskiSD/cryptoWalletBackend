@@ -11,6 +11,8 @@ import com.wallet.cryptocurrency.service.WalletService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +28,9 @@ public class WalletController {
 
     @GetMapping
     public ResponseEntity<List<WalletDto>> getWalletList() {
-        return ResponseEntity.ok().body(walletMapper.mapToWalletsDto(walletService.findAllWallet()));
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long userId = ((User) authentication.getPrincipal()).getUserId();
+        return ResponseEntity.ok().body(walletMapper.mapToWalletsDto(walletService.findWalletsByUserId(userId)));
     }
 
     @GetMapping(value = "/{walletId}")
