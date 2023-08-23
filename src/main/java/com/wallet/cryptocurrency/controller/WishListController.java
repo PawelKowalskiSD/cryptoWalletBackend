@@ -10,6 +10,8 @@ import com.wallet.cryptocurrency.service.WishListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,12 +26,16 @@ public class WishListController {
 
     @GetMapping
     public ResponseEntity<List<WishListDto>> getWishLists() {
-        return ResponseEntity.ok().body(wishListMapper.mapToWishListsDto(wishListService.findAllWishLists()));
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long userId = ((User) authentication.getPrincipal()).getUserId();
+        return ResponseEntity.ok().body(wishListMapper.mapToWishListsDto(wishListService.findWishListByAllUserId(userId)));
     }
 
     @GetMapping(value = "/{wishListId}")
     public ResponseEntity<WishListDto> getWishList(@PathVariable Long wishListId) throws Exception {
-        return ResponseEntity.ok().body(wishListMapper.mapToWishListDto(wishListService.findByWishListId(wishListId)));
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long userId = ((User) authentication.getPrincipal()).getUserId();
+        return ResponseEntity.ok().body(wishListMapper.mapToWishListDto(wishListService.findByWishListIdAndUserId(wishListId, userId)));
     }
 
     @PostMapping(value = "/create/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE)

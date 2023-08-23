@@ -30,8 +30,8 @@ public class WalletService {
         return wallet;
     }
 
-    public void deleteWalletById(Long walletId) {
-        walletRepository.deleteById(walletId);
+    public void deleteWalletById(Long walletId, Long userId) {
+        walletRepository.deleteWalletByWalletIdAndUser_UserId(walletId, userId);
     }
 
     public List<Wallet> findAllWallet() {
@@ -45,6 +45,10 @@ public class WalletService {
 
     public List<Wallet> findWalletsByUserId(Long id) {
         return walletRepository.findAllByUser_UserId(id);
+    }
+
+    public Wallet findByWalletIdAndUserId(Long walletId, Long userId) throws Exception {
+        return walletRepository.findWalletByWalletIdAndUser_UserId(walletId, userId).orElseThrow(Exception::new);
     }
 
 }

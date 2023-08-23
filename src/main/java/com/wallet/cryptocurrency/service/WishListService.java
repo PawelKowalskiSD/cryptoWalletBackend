@@ -14,16 +14,20 @@ public class WishListService {
 
     private final WishListRepository wishListRepository;
 
-    public List<WishList> findAllWishLists() {
-        return wishListRepository.findAll();
-    }
-
     public WishList findByWishListId(Long id) throws Exception {
         return wishListRepository.findById(id).orElseThrow(Exception::new);
+    }
+
+    public WishList findByWishListIdAndUserId(Long wishListId, Long userId) throws Exception {
+        return wishListRepository.findByWishListIdAndUserUserId(wishListId, userId).orElseThrow(Exception::new);
     }
 
     public void addWishListToUserAccount(User user, WishList wishList) {
         wishList.setUser(user);
         wishListRepository.save(wishList);
+    }
+
+    public List<WishList> findWishListByAllUserId(Long id) {
+        return wishListRepository.findAllByUser_UserId(id);
     }
 }

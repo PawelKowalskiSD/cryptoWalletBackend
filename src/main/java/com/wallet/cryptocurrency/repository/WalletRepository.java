@@ -17,8 +17,12 @@ public interface WalletRepository extends CrudRepository<Wallet, Long> {
     @Override
     void deleteById(Long id);
 
+    void deleteWalletByWalletIdAndUser_UserId(Long walletId, Long userId);
+
     @Override
     List<Wallet> findAll();
 
     List<Wallet> findAllByUser_UserId(Long id);
+
+    Optional<Wallet> findWalletByWalletIdAndUser_UserId(Long walletId, Long userId);
 }

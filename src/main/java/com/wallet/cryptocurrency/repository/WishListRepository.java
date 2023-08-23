@@ -14,6 +14,8 @@ public interface WishListRepository extends CrudRepository<WishList, Long> {
 
     @Override
     List<WishList> findAll();
-    @Override
-    Optional<WishList> findById(Long id);
+
+    Optional<WishList> findByWishListIdAndUserUserId(Long wishListId, Long userId);
+
+    List<WishList> findAllByUser_UserId(Long id);
 }

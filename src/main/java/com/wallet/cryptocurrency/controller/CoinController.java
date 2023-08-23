@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/coins")
@@ -29,8 +28,8 @@ public class CoinController {
     private final WalletService walletService;
 
     @GetMapping("/{coinId}")
-    public ResponseEntity<CoinDto> getToken(@PathVariable String tokenId) {
-        CoinDto coinDto = coinGeckoClient.searchToken(tokenId);
+    public ResponseEntity<CoinDto> getCoin(@PathVariable String coinId) {
+        CoinDto coinDto = coinGeckoClient.searchToken(coinId);
         if (coinDto != null && coinDto.getCoinDataDto() != null && coinDto.getCoinDataDto().length > 0) {
             return ResponseEntity.ok(coinDto);
         } else {

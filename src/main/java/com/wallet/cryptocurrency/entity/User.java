@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -46,6 +47,7 @@ public class User implements UserDetails {
     @OneToMany(
             targetEntity = WishList.class,
             mappedBy = "user",
+            cascade = CascadeType.REMOVE,
             fetch = FetchType.LAZY
     )
     private List<WishList> wishLists = new ArrayList<>();
@@ -53,6 +55,7 @@ public class User implements UserDetails {
     @OneToMany(
             targetEntity = Wallet.class,
             mappedBy = "user",
+            cascade = CascadeType.REMOVE,
             fetch = FetchType.LAZY
     )
     private List<Wallet> walletList = new ArrayList<>();

@@ -29,7 +29,7 @@ public class DashboardFacade {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long userId = ((User) authentication.getPrincipal()).getUserId();
         List<Wallet> wallets = walletService.findWalletsByUserId(userId);
-        List<WishList> wishLists = wishListService.findAllWishLists();
+        List<WishList> wishLists = wishListService.findWishListByAllUserId(userId);
 
         List<DashboardDto> dashboardDtoList = new ArrayList<>();
 

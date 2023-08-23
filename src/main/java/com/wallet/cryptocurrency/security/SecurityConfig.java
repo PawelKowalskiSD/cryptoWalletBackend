@@ -35,7 +35,7 @@ public class SecurityConfig {
         httpSecurity.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
         httpSecurity.authorizeHttpRequests()
                 .requestMatchers("/auth/**").permitAll()
-                .requestMatchers("/users/**", "/wallets/**", "/wishLists/**").hasAuthority(Role.USER.toString())
+                .requestMatchers("/users/**", "/wallets/**", "/wish-lists/**").hasAuthority(Role.USER.toString())
                 .anyRequest()
                 .authenticated();
         httpSecurity.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);

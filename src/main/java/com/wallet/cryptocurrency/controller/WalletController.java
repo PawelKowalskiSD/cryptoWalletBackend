@@ -34,8 +34,10 @@ public class WalletController {
     }
 
     @GetMapping(value = "/{walletId}")
-    public ResponseEntity<WalletDto> getWallet(@PathVariable Long walletId) throws WalletNotFoundException {
-        return ResponseEntity.ok().body(walletMapper.mapToWalletDto(walletService.findWalletById(walletId)));
+    public ResponseEntity<WalletDto> getWallet(@PathVariable Long walletId) throws Exception {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long userId = ((User) authentication.getPrincipal()).getUserId();
+        return ResponseEntity.ok().body(walletMapper.mapToWalletDto(walletService.findByWalletIdAndUserId(walletId, userId)));
     }
 
     @PostMapping("/create-wallets/{userId}")
@@ -47,14 +49,18 @@ public class WalletController {
     }
 
     @PatchMapping(value = "/{walletId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<WalletDto> updateWallet(@RequestBody WalletDto walletDto, @PathVariable Long walletId) throws WalletNotFoundException {
-        Wallet wallet = walletService.findWalletById(walletId);
+    public ResponseEntity<WalletDto> updateWallet(@RequestBody WalletDto walletDto, @PathVariable Long walletId) throws Exception {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long userId = ((User) authentication.getPrincipal()).getUserId();
+        Wallet wallet = walletService.findByWalletIdAndUserId(walletId, userId);
         return ResponseEntity.ok().body(walletMapper.mapToWalletDto(walletService.editWallet(wallet, walletDto)));
     }
 
     @DeleteMapping(value = "/{walletId}")
     public ResponseEntity<Void> deleteWallet(@PathVariable Long walletId) {
-        walletService.deleteWalletById(walletId);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long userId = ((User) authentication.getPrincipal()).getUserId();
+        walletService.deleteWalletById(walletId, userId);
         return ResponseEntity.ok().build();
     }
 }
