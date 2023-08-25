@@ -30,8 +30,10 @@ public class UserController {
         return ResponseEntity.ok().body(dashboardFacade.fetchDashboard());
     }
 
-    @PatchMapping(value = "/edit-account/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDto> editAccount(@RequestBody UserDto userDto, @PathVariable Long userId) throws UserNotFoundException {
+    @PatchMapping(value = "/edit-account", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDto> editAccount(@RequestBody UserDto userDto) throws UserNotFoundException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long userId = ((User) authentication.getPrincipal()).getUserId();
         User user = userService.findUserAccountById(userId);
         userService.editUserAccount(user, userDto);
         return ResponseEntity.ok().body(userMapper.mapToUserDto(user));

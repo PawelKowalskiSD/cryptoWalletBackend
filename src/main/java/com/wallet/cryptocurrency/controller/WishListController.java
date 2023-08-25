@@ -38,18 +38,21 @@ public class WishListController {
         return ResponseEntity.ok().body(wishListMapper.mapToWishListDto(wishListService.findByWishListIdAndUserId(wishListId, userId)));
     }
 
-    @PostMapping(value = "/create/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> createWishList(@RequestBody WishListDto wishListDto, @PathVariable Long userId) throws UserNotFoundException {
+    @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> createWishList(@RequestBody WishListDto wishListDto) throws UserNotFoundException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long userId = ((User) authentication.getPrincipal()).getUserId();
         User user = userService.findUserAccountById(userId);
         WishList wishList = wishListMapper.mapToWishlist(wishListDto);
         wishListService.addWishListToUserAccount(user, wishList);
         return ResponseEntity.ok().build();
-
     }
 
     @DeleteMapping(value = "{wishListId}")
     public ResponseEntity<Void> deleteWishList(@PathVariable Long wishListId) throws Exception {
-        wishListService.findByWishListId(wishListId);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long userId = ((User) authentication.getPrincipal()).getUserId();
+        wishListService.findByWishListIdAndUserId(wishListId, userId);
         return ResponseEntity.ok().build();
     }
 }

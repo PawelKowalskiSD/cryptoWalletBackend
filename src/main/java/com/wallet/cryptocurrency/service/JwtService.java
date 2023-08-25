@@ -30,6 +30,8 @@ public class JwtService {
         Algorithm algorithm = Algorithm.HMAC512("secret");
         String token = JWT.create()
                 .withClaim("id", user.getUserId())
+                .withExpiresAt()
+                .withClaim("isLogin", true)
                 .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
         return new AuthResponse(user.getUsername(), token);

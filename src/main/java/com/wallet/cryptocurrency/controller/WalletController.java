@@ -4,7 +4,6 @@ import com.wallet.cryptocurrency.dto.WalletDto;
 import com.wallet.cryptocurrency.entity.User;
 import com.wallet.cryptocurrency.entity.Wallet;
 import com.wallet.cryptocurrency.exceptions.UserNotFoundException;
-import com.wallet.cryptocurrency.exceptions.WalletNotFoundException;
 import com.wallet.cryptocurrency.mapper.WalletMapper;
 import com.wallet.cryptocurrency.service.UserService;
 import com.wallet.cryptocurrency.service.WalletService;
@@ -40,8 +39,10 @@ public class WalletController {
         return ResponseEntity.ok().body(walletMapper.mapToWalletDto(walletService.findByWalletIdAndUserId(walletId, userId)));
     }
 
-    @PostMapping("/create-wallets/{userId}")
-    public ResponseEntity<Void> createWallet(@RequestBody WalletDto walletDto, @PathVariable Long userId) throws UserNotFoundException {
+    @PostMapping("/create-wallets")
+    public ResponseEntity<Void> createWallet(@RequestBody WalletDto walletDto) throws UserNotFoundException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long userId = ((User) authentication.getPrincipal()).getUserId();
         User user = userService.findUserAccountById(userId);
         Wallet wallet = walletMapper.mapToWallet(walletDto);
         walletService.addWalletToUserAccount(user, wallet);
@@ -60,7 +61,7 @@ public class WalletController {
     public ResponseEntity<Void> deleteWallet(@PathVariable Long walletId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long userId = ((User) authentication.getPrincipal()).getUserId();
-        walletService.deleteWalletById(walletId, userId);
+        walletService.deleteWalletByIdAndUserId(walletId, userId);
         return ResponseEntity.ok().build();
     }
 }

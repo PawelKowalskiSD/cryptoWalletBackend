@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -30,7 +29,7 @@ public class WalletService {
         return wallet;
     }
 
-    public void deleteWalletById(Long walletId, Long userId) {
+    public void deleteWalletByIdAndUserId(Long walletId, Long userId) {
         walletRepository.deleteWalletByWalletIdAndUser_UserId(walletId, userId);
     }
 
