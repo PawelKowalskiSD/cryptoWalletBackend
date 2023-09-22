@@ -10,7 +10,6 @@ import org.thymeleaf.context.Context;
 @RequiredArgsConstructor
 @Service
 public class MailCreatorService {
-
     private final TemplateEngine templateEngine;
     private final ConfigApp configApp;
 
@@ -18,7 +17,7 @@ public class MailCreatorService {
         Context context = new Context();
         context.setVariable("message", message);
         context.setVariable("config", configApp);
-        context.setVariable("url", "auth/verify?token=");
+        context.setVariable("url", "auth/verify?verifyToken=");
         context.setVariable("verifyToken", verifyToken.getValue());
         return templateEngine.process("verify-token-mail.html", context);
     }

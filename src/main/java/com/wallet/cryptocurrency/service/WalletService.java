@@ -1,6 +1,7 @@
 package com.wallet.cryptocurrency.service;
 
 import com.wallet.cryptocurrency.dto.WalletDto;
+import com.wallet.cryptocurrency.entity.Coin;
 import com.wallet.cryptocurrency.entity.User;
 import com.wallet.cryptocurrency.entity.Wallet;
 import com.wallet.cryptocurrency.exceptions.WalletNotFoundException;
@@ -13,12 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class WalletService {
-
     private final WalletRepository walletRepository;
-
-    public Wallet findWalletById(Long id) throws WalletNotFoundException {
-        return walletRepository.findById(id).orElseThrow(WalletNotFoundException::new);
-    }
 
     public Wallet editWallet(Wallet wallet, WalletDto walletDto) {
         if (wallet.getWalletId() != null) {
@@ -33,10 +29,6 @@ public class WalletService {
         walletRepository.deleteWalletByWalletIdAndUser_UserId(walletId, userId);
     }
 
-    public List<Wallet> findAllWallet() {
-        return walletRepository.findAll();
-    }
-
     public void addWalletToUserAccount(User user, Wallet wallet) {
         wallet.setUser(user);
         walletRepository.save(wallet);
@@ -49,5 +41,4 @@ public class WalletService {
     public Wallet findByWalletIdAndUserId(Long walletId, Long userId) throws Exception {
         return walletRepository.findWalletByWalletIdAndUser_UserId(walletId, userId).orElseThrow(Exception::new);
     }
-
 }

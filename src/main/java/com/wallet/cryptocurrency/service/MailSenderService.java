@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class MailSenderService {
-
     private final JavaMailSender javaMailSender;
     private final MailCreatorService mailCreatorService;
 

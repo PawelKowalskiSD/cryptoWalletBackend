@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface VerifyTokenRepository extends CrudRepository<VerifyToken, Long> {
-
     VerifyToken findByValue(String value);
 
 }

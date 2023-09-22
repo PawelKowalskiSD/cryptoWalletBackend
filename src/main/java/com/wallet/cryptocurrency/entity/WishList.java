@@ -26,13 +26,13 @@ public class WishList {
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
-            name = "JOIN_TOKEN_WISH_LIST",
+            name = "JOIN_COIN_WISH_LIST",
             joinColumns = {@JoinColumn(name = "WISH_LIST_ID", referencedColumnName = "WISH_LIST_ID")},
             inverseJoinColumns = {@JoinColumn(name = "COIN_ID", referencedColumnName = "COIN_ID")}
     )
-    private List<Coin> coinList = new ArrayList<>();
+    private List<Coin> coinWishList = new ArrayList<>();
 
     public WishList(Long wishListId, String wishListName) {
         this.wishListId = wishListId;

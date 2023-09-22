@@ -9,16 +9,15 @@ public class CoinMapper {
 
     public Coin mapToToken(CoinDataDto coinDataDto) {
         Coin coin = new Coin();
-        coin.setTokenName(coinDataDto.getTokenName());
+        coin.setCoinName(coinDataDto.getCoinName());
         coin.setSymbol(coinDataDto.getSymbol());
         return coin;
     }
-    public CoinDataDto mapToTokenDto(final Coin coin) {
-        return new CoinDataDto(
-                coin.getTokenName(),
-                coin.getSymbol(),
-                coin.getQuantity(),
-                coin.getUrlImages()
-        );
-    }
+//    public CoinDataDto mapToTokenDto(final Coin coin) {
+//        return new CoinDataDto(
+//                coin.getTokenName(),
+//                coin.getSymbol(),
+//                coin.getQuantity()
+//        );
+//    }
 }

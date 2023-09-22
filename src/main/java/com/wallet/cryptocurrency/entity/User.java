@@ -1,5 +1,7 @@
 package com.wallet.cryptocurrency.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -59,8 +61,10 @@ public class User implements UserDetails {
             fetch = FetchType.LAZY
     )
     private List<Wallet> walletList = new ArrayList<>();
-    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "user")
     private VerifyToken verifyToken;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<JwtToken> jwtTokens = new ArrayList<>();
 
     public User(Long userId, String firstname, String lastname, String username, String password, String mailAddressee, String role) {
         this.userId = userId;
@@ -113,4 +117,5 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return isEnabled;
     }
+
 }

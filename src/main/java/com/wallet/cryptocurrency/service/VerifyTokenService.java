@@ -13,15 +13,14 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 public class VerifyTokenService {
-
     private final VerifyTokenRepository verifyTokenRepository;
     private final UserRepository userRepository;
     private final MailSenderService mailSenderService;
 
-    public void verifyToken(String token) {
-        VerifyToken verifyToken = verifyTokenRepository.findByValue(token);
-        if (verifyToken != null) {
-            User user = verifyToken.getUser();
+    public void verifyToken(String verifyTokens) {
+        VerifyToken verify = verifyTokenRepository.findByValue(verifyTokens);
+        if (verify != null) {
+            User user = verify.getUser();
             user.setEnabled(true);
             userRepository.save(user);
         }

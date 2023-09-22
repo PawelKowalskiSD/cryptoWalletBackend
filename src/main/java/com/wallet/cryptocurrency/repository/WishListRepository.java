@@ -11,10 +11,6 @@ import java.util.Optional;
 @Transactional
 @Repository
 public interface WishListRepository extends CrudRepository<WishList, Long> {
-
-    @Override
-    List<WishList> findAll();
-
     Optional<WishList> findByWishListIdAndUserUserId(Long wishListId, Long userId);
 
     List<WishList> findAllByUser_UserId(Long id);

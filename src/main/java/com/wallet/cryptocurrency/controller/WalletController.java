@@ -20,7 +20,6 @@ import java.util.List;
 @RequestMapping("/wallets")
 @RestController
 public class WalletController {
-
     private final WalletMapper walletMapper;
     private final WalletService walletService;
     private final UserService userService;

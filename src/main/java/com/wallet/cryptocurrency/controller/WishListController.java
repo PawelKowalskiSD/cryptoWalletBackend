@@ -15,11 +15,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @RequiredArgsConstructor
 @RequestMapping("/wish-lists")
 @RestController
 public class WishListController {
-
     private final WishListMapper wishListMapper;
     private final WishListService wishListService;
     private final UserService userService;

@@ -6,12 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CoinDataDto {
-
+public class RefreshCoinDataDto {
     @JsonProperty("id")
     private String coinId;
 
@@ -23,4 +23,19 @@ public class CoinDataDto {
 
     @JsonProperty("market_cap_rank")
     private Long marketCapRank;
+
+    @JsonProperty("current_price")
+    private BigDecimal currentPrice;
+
+    @JsonProperty("market_cap")
+    private BigDecimal marketCap;
+
+    @JsonProperty("high_24h")
+    private BigDecimal high24h;
+
+    @JsonProperty("low_24h")
+    private BigDecimal low24h;
+
+    @JsonProperty("circulating_supply")
+    private BigDecimal circulatingSupply;
 }

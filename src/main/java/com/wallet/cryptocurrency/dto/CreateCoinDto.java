@@ -10,17 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CoinDataDto {
+public class CreateCoinDto {
 
-    @JsonProperty("id")
-    private String coinId;
-
-    @JsonProperty("name")
-    private String coinName;
-
-    @JsonProperty("symbol")
-    private String symbol;
-
-    @JsonProperty("market_cap_rank")
-    private Long marketCapRank;
+    @JsonProperty("Coin")
+    private CreateCoinDataDto [] createCoinDataDto;
 }

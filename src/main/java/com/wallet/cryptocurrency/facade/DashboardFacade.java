@@ -19,7 +19,6 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class DashboardFacade {
-
     private final WalletService walletService;
     private final WishListService wishListService;
     private final WalletMapper walletMapper;

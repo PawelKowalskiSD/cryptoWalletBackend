@@ -20,7 +20,6 @@ import java.util.List;
 @RequestMapping("/users")
 @RestController
 public class UserController {
-
     private final UserMapper userMapper;
     private final UserService userService;
     private final DashboardFacade dashboardFacade;

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-
     private final JwtService jwtService;
     private final UserMapper userMapper;
     private final UserService userService;
@@ -37,15 +36,9 @@ public class AuthController {
     }
 
     @GetMapping(value = "/verify")
-    public ResponseEntity<Void> verifyAccount(@RequestParam String token) {
-        verifyTokenService.verifyToken(token);
-        HttpHeaders headers = new HttpHeaders();
+    public ResponseEntity<Void> verifyAccount(@RequestParam String verifyToken, @RequestHeader HttpHeaders headers) {
+        verifyTokenService.verifyToken(verifyToken);
         headers.add("Location", "/auth/log-in");
         return new ResponseEntity<>(headers, HttpStatus.FOUND);
-    }
-
-    @PostMapping(value = "/log-out")
-    public ResponseEntity<String> logOut() {
-        return ResponseEntity.ok().build();
     }
 }

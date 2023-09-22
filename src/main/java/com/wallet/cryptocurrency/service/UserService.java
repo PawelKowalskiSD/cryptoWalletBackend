@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -27,16 +26,8 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public User saveUserAccount(User user) {
-        return userRepository.save(user);
-    }
-
     public void deleteUserAccountById(Long userId) {
         userRepository.deleteById(userId);
-    }
-
-    public User findUserAccountByUsername(String username) throws UserNotFoundException {
-        return userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
     }
 
     public void editUserAccount(User user, UserDto userDto) {

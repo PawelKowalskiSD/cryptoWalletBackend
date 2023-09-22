@@ -11,12 +11,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class WishListService {
-
     private final WishListRepository wishListRepository;
-
-    public WishList findByWishListId(Long id) throws Exception {
-        return wishListRepository.findById(id).orElseThrow(Exception::new);
-    }
 
     public WishList findByWishListIdAndUserId(Long wishListId, Long userId) throws Exception {
         return wishListRepository.findByWishListIdAndUserUserId(wishListId, userId).orElseThrow(Exception::new);

@@ -1,5 +1,7 @@
 package com.wallet.cryptocurrency.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -27,9 +29,9 @@ public class Wallet {
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
-            name = "JOIN_TOKEN_WALLET",
+            name = "JOIN_COIN_WALLET",
             joinColumns = {@JoinColumn(name = "WALLET_ID", referencedColumnName = "WALLET_ID")},
             inverseJoinColumns = {@JoinColumn(name = "COIN_ID", referencedColumnName = "COIN_ID")}
     )
