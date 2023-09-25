@@ -3,7 +3,6 @@ package com.wallet.cryptocurrency.service;
 import com.wallet.cryptocurrency.domain.Role;
 import com.wallet.cryptocurrency.dto.UserDto;
 import com.wallet.cryptocurrency.entity.User;
-import com.wallet.cryptocurrency.entity.Wallet;
 import com.wallet.cryptocurrency.exceptions.UserNotFoundException;
 import com.wallet.cryptocurrency.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -44,9 +43,9 @@ public class UserService {
             if (userDto.getMailAddressee() != null) {
                 user.setMailAddressee(userDto.getMailAddressee());
             }
-                userRepository.save(user);
-            }
+            userRepository.save(user);
         }
+    }
 
     public User findUserAccountById(Long userId) throws UserNotFoundException {
         return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);

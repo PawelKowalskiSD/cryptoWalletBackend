@@ -37,7 +37,7 @@ public class CoinService {
             CreateCoinDataDto createCoinDataDto = tokenData[0];
             String coinId = createCoinDataDto.getCoinId();
             Coin existingCoin = coinRepository.findCoinsByCoinName(coinId);
-            if (existingCoin != null) {
+            if (existingCoin != null && existingCoin.getInvestedFunds() != null) {
                 existingCoin.setAveragePurchasePrice(getDivide(quantity, createCoinDataDto, existingCoin));
                 existingCoin.setInvestedFunds(getAddQuantity(existingCoin.getInvestedFunds(), quantity.multiply(createCoinDataDto.getCurrentPrice())));
                 existingCoin.setQuantity(getAddQuantity(existingCoin.getQuantity(), quantity));
@@ -219,6 +219,7 @@ public class CoinService {
                     coin.setCirculatingSupply(coinToWishlistDto.getCirculatingSupply());
 
                     coinRepository.save(coin);
+
                 } else if (coin.getQuantity().compareTo(quantity) == 0)
                     coinRepository.deleteByCoinId(coin.getCoinId());
             }

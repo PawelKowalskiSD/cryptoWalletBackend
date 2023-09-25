@@ -1,12 +1,13 @@
 package com.wallet.cryptocurrency.service;
 
 import com.wallet.cryptocurrency.dto.WalletDto;
-import com.wallet.cryptocurrency.entity.Coin;
 import com.wallet.cryptocurrency.entity.User;
 import com.wallet.cryptocurrency.entity.Wallet;
+import com.wallet.cryptocurrency.exceptions.UserNotFoundException;
 import com.wallet.cryptocurrency.exceptions.WalletNotFoundException;
 import com.wallet.cryptocurrency.repository.WalletRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,7 +39,12 @@ public class WalletService {
         return walletRepository.findAllByUser_UserId(id);
     }
 
-    public Wallet findByWalletIdAndUserId(Long walletId, Long userId) throws Exception {
-        return walletRepository.findWalletByWalletIdAndUser_UserId(walletId, userId).orElseThrow(Exception::new);
+    public Wallet findByWalletIdAndUserId(Long walletId, Long userId) throws UserNotFoundException, WalletNotFoundException {
+        try {
+            return walletRepository.findWalletByWalletIdAndUser_UserId(walletId, userId)
+                    .orElseThrow(WalletNotFoundException::new);
+        } catch (EmptyResultDataAccessException e) {
+            throw new UserNotFoundException();
+        }
     }
 }

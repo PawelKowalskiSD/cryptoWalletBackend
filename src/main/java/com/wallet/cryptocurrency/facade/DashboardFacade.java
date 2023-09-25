@@ -1,9 +1,11 @@
 package com.wallet.cryptocurrency.facade;
 
+import com.wallet.cryptocurrency.config.ConfigAuthentication;
 import com.wallet.cryptocurrency.dto.DashboardDto;
 import com.wallet.cryptocurrency.entity.User;
 import com.wallet.cryptocurrency.entity.Wallet;
 import com.wallet.cryptocurrency.entity.WishList;
+import com.wallet.cryptocurrency.exceptions.UserPermissionsException;
 import com.wallet.cryptocurrency.mapper.WalletMapper;
 import com.wallet.cryptocurrency.mapper.WishListMapper;
 import com.wallet.cryptocurrency.service.WalletService;
@@ -24,9 +26,10 @@ public class DashboardFacade {
     private final WalletMapper walletMapper;
     private final WishListMapper wishListMapper;
 
-    public List<DashboardDto> fetchDashboard() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Long userId = ((User) authentication.getPrincipal()).getUserId();
+    private final ConfigAuthentication configAuthentication;
+
+    public List<DashboardDto> fetchDashboard(Authentication authentication) throws UserPermissionsException {
+        Long userId = configAuthentication.getUserIdFromAuthentication(authentication);
         List<Wallet> wallets = walletService.findWalletsByUserId(userId);
         List<WishList> wishLists = wishListService.findWishListByAllUserId(userId);
 

@@ -17,7 +17,7 @@ public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<Object> handleUserAccountExistsException(AccountExistsException exception) {
         return new ResponseEntity<>("Account with the given e-mail address already exists, " +
-                                            "please enter another e-mail address or go to login", HttpStatus.CONFLICT);
+                "please enter another e-mail address or go to login", HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler
@@ -38,5 +38,15 @@ public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<Object> handlerWalletNotFoundException(WalletNotFoundException exception) {
         return new ResponseEntity<>("Wallet not exist", HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<Object> handlerUserPermissionsException(UserPermissionsException exception) {
+        return new ResponseEntity<>("You don't have enough permissions", HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<Object> handlerWishListNotFoundException(WishListNotFoundException exception) {
+        return new ResponseEntity<>("Wish list not exist", HttpStatus.NOT_FOUND);
     }
 }
