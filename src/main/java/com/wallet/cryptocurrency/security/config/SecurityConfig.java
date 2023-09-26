@@ -1,4 +1,4 @@
-package com.wallet.cryptocurrency.security;
+package com.wallet.cryptocurrency.security.config;
 
 import com.wallet.cryptocurrency.domain.Role;
 import com.wallet.cryptocurrency.exceptions.UserNotFoundException;

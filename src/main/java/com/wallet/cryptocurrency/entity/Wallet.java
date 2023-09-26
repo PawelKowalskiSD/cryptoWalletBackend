@@ -29,7 +29,7 @@ public class Wallet {
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(
             name = "JOIN_COIN_WALLET",
             joinColumns = {@JoinColumn(name = "WALLET_ID", referencedColumnName = "WALLET_ID")},

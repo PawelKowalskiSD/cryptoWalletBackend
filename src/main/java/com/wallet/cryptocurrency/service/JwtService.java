@@ -9,6 +9,7 @@ import com.wallet.cryptocurrency.entity.User;
 import com.wallet.cryptocurrency.repository.JwtTokenRepository;
 import com.wallet.cryptocurrency.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.stream.Collectors;
@@ -51,6 +53,16 @@ public class JwtService {
         validUserToken.forEach(token -> {
             token.setExpired(true);
         });
+    }
+//    @Scheduled(fixedRate = 60000)
+//    public void tokenExpires(String token) {
+//        long currentTimeMillis = System.currentTimeMillis();
+//        var validTime = jwtTokenRepository.findByToken(token);
+//        long timeDifferenceMillis = currentTimeMillis - validTime.getTime().getTime();
+//        long tenMinutesMillis = 10 * 60 * 1000;
+//        if (timeDifferenceMillis >= tenMinutesMillis) {
+//            validTime.setExpired(true);
+//        }
     }
 
     private JwtToken saveToken(String token, User user) {

@@ -26,7 +26,7 @@ public class WishList {
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(
             name = "JOIN_COIN_WISH_LIST",
             joinColumns = {@JoinColumn(name = "WISH_LIST_ID", referencedColumnName = "WISH_LIST_ID")},

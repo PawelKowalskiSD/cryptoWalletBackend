@@ -62,7 +62,7 @@ public class Coin {
     @Column(name = "INVESTED_FUNDS")
     private BigDecimal investedFunds;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "coinList")
     private List<Wallet> walletList = new ArrayList<>();
 
     @ManyToMany(mappedBy = "coinWishList")

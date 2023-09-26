@@ -61,7 +61,7 @@ public class User implements UserDetails {
             fetch = FetchType.LAZY
     )
     private List<Wallet> walletList = new ArrayList<>();
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
     private VerifyToken verifyToken;
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<JwtToken> jwtTokens = new ArrayList<>();
