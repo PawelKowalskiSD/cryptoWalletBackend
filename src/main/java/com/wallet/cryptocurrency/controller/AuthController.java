@@ -3,6 +3,7 @@ package com.wallet.cryptocurrency.controller;
 import com.wallet.cryptocurrency.domain.AuthRequest;
 import com.wallet.cryptocurrency.dto.UserDto;
 import com.wallet.cryptocurrency.entity.User;
+import com.wallet.cryptocurrency.exceptions.UserPermissionsException;
 import com.wallet.cryptocurrency.mapper.UserMapper;
 import com.wallet.cryptocurrency.service.JwtService;
 import com.wallet.cryptocurrency.service.UserService;
@@ -28,11 +29,15 @@ public class AuthController {
     }
 
     @PostMapping(value = "/sign-up")
-    public ResponseEntity<UserDto> signUp(@RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> signUp(@RequestBody UserDto userDto) throws UserPermissionsException {
         User user = userMapper.mapToUser(userDto);
-        userService.createUser(user);
-        verifyTokenService.createAndSaveToken(user);
-        return ResponseEntity.ok().build();
+        try {
+            userService.createUser(user);
+            verifyTokenService.createAndSaveToken(user);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            throw  new UserPermissionsException();
+        }
     }
 
     @GetMapping(value = "/verify")

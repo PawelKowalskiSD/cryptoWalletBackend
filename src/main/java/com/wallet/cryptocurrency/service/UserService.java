@@ -4,6 +4,7 @@ import com.wallet.cryptocurrency.domain.Role;
 import com.wallet.cryptocurrency.dto.UserDto;
 import com.wallet.cryptocurrency.entity.User;
 import com.wallet.cryptocurrency.exceptions.UserNotFoundException;
+import com.wallet.cryptocurrency.exceptions.UserPermissionsException;
 import com.wallet.cryptocurrency.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,13 +17,16 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public void createUser(User user) {
-        user.setFirstname(user.getFirstname());
-        user.setLastname(user.getLastname());
-        user.setUsername(user.getUsername());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setMailAddressee(user.getMailAddressee());
-        user.setRole(Role.USER.toString());
-        userRepository.save(user);
+        if (userRepository.findUsersByMailAddressee(user.getMailAddressee()).isEmpty()) {
+            user.setFirstname(user.getFirstname());
+            user.setLastname(user.getLastname());
+            user.setUsername(user.getUsername());
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setMailAddressee(user.getMailAddressee());
+            user.setRole(Role.USER.toString());
+            userRepository.save(user);
+        }
+
     }
 
     public void deleteUserAccountById(Long userId) {

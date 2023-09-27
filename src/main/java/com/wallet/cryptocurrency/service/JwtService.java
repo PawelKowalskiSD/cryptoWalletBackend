@@ -54,16 +54,7 @@ public class JwtService {
             token.setExpired(true);
         });
     }
-//    @Scheduled(fixedRate = 60000)
-//    public void tokenExpires(String token) {
-//        long currentTimeMillis = System.currentTimeMillis();
-//        var validTime = jwtTokenRepository.findByToken(token);
-//        long timeDifferenceMillis = currentTimeMillis - validTime.getTime().getTime();
-//        long tenMinutesMillis = 10 * 60 * 1000;
-//        if (timeDifferenceMillis >= tenMinutesMillis) {
-//            validTime.setExpired(true);
-//        }
-    }
+
 
     private JwtToken saveToken(String token, User user) {
         JwtToken jwtToken = new JwtToken(token, false, LocalDate.now(), Time.valueOf(LocalTime.now()), user);
