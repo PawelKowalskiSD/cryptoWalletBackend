@@ -9,7 +9,6 @@ import com.wallet.cryptocurrency.entity.User;
 import com.wallet.cryptocurrency.repository.JwtTokenRepository;
 import com.wallet.cryptocurrency.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,9 +17,9 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Time;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -46,6 +45,38 @@ public class JwtService {
         return new AuthResponse(user.getUsername(), token);
     }
 
+    public void findAllExpiredToken() {
+        checkIfIsExpired();
+        removeExpired();
+
+    }
+
+    private void removeExpired() {
+        LocalTime currentTime = LocalTime.now();
+        LocalTime expiration = currentTime.minusMinutes(10);
+        List<JwtToken> jwtTokensExpired = jwtTokenRepository.findAllByExpired(true);
+        for (JwtToken token : jwtTokensExpired) {
+            LocalTime tokenTime = token.getTime().toLocalTime();
+            if (token.isExpired() && tokenTime.isBefore(expiration))
+                jwtTokenRepository.delete(token);
+        }
+
+    }
+
+    private void checkIfIsExpired() {
+        LocalTime currentTime = LocalTime.now();
+        LocalTime expiration = currentTime.minusMinutes(10);
+
+        List<JwtToken> tokensHaveNotExpired = jwtTokenRepository.findAllByExpired(false);
+        for (JwtToken token : tokensHaveNotExpired) {
+            LocalTime tokenTime = token.getTime().toLocalTime();
+            if (tokenTime.isBefore(expiration)) {
+                token.setExpired(true);
+                jwtTokenRepository.save(token);
+            }
+        }
+    }
+
     private void revokeAllUserTokens(User user) {
         var validUserToken = jwtTokenRepository.findAllJwtTokenByUser(user.getUserId());
         if (validUserToken.isEmpty())
@@ -54,7 +85,6 @@ public class JwtService {
             token.setExpired(true);
         });
     }
-
 
     private JwtToken saveToken(String token, User user) {
         JwtToken jwtToken = new JwtToken(token, false, LocalDate.now(), Time.valueOf(LocalTime.now()), user);

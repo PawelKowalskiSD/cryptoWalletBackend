@@ -1,6 +1,7 @@
 package com.wallet.cryptocurrency.security.config;
 
 import com.wallet.cryptocurrency.domain.Role;
+import com.wallet.cryptocurrency.entity.User;
 import com.wallet.cryptocurrency.exceptions.UserNotFoundException;
 import com.wallet.cryptocurrency.repository.UserRepository;
 import com.wallet.cryptocurrency.security.jwt.JwtTokenFilter;
@@ -13,9 +14,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;

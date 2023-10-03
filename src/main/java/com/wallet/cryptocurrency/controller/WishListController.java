@@ -48,7 +48,7 @@ public class WishListController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping(value = "{wishListId}")
+    @DeleteMapping(value = "/delete/{wishListId}")
     public ResponseEntity<Void> deleteWishList(@PathVariable Long wishListId, Authentication authentication) throws UserPermissionsException, UserNotFoundException, WishListNotFoundException {
         Long userId = configAuthentication.getUserIdFromAuthentication(authentication);
         wishListService.findByWishListIdAndUserId(wishListId, userId);

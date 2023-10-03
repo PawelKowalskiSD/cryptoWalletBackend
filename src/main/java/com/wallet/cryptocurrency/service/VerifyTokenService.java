@@ -27,17 +27,19 @@ public class VerifyTokenService {
     }
 
     public void createAndSaveToken(User user) {
-        String verifyTokenValue = UUID.randomUUID().toString();
-        VerifyToken verifyToken = new VerifyToken(verifyTokenValue, user);
-        verifyTokenRepository.save(verifyToken);
+        if (userRepository.findUsersByMailAddressee(user.getMailAddressee()).isEmpty()) {
+            String verifyTokenValue = UUID.randomUUID().toString();
+            VerifyToken verifyToken = new VerifyToken(verifyTokenValue, user);
+            verifyTokenRepository.save(verifyToken);
 
-        mailSenderService.sendMailAccountActivation(Mail.builder()
-                        .mailTo(user.getMailAddressee())
-                        .subject("Verify Token")
-                        .message("We send you mail")
-                        .toCc(null)
-                        .build()
-                , verifyToken
-        );
+            mailSenderService.sendMailAccountActivation(Mail.builder()
+                            .mailTo(user.getMailAddressee())
+                            .subject("Verify Token")
+                            .message("We send you mail")
+                            .toCc(null)
+                            .build()
+                    , verifyToken
+            );
+        }
     }
 }

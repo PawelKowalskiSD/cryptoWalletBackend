@@ -89,6 +89,17 @@ public class User implements UserDetails {
         this.role = role;
     }
 
+    public User(Long userId, String firstname, String lastname, String username, String password, String mailAddressee, boolean isEnabled, String role) {
+        this.userId = userId;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.username = username;
+        this.password = password;
+        this.mailAddressee = mailAddressee;
+        this.isEnabled = isEnabled;
+        this.role = role;
+    }
+
     public User(Long userId) {
         this.userId = userId;
     }

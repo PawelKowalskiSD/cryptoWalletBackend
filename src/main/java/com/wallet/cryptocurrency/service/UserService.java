@@ -4,7 +4,6 @@ import com.wallet.cryptocurrency.domain.Role;
 import com.wallet.cryptocurrency.dto.UserDto;
 import com.wallet.cryptocurrency.entity.User;
 import com.wallet.cryptocurrency.exceptions.UserNotFoundException;
-import com.wallet.cryptocurrency.exceptions.UserPermissionsException;
 import com.wallet.cryptocurrency.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,7 +25,6 @@ public class UserService {
             user.setRole(Role.USER.toString());
             userRepository.save(user);
         }
-
     }
 
     public void deleteUserAccountById(Long userId) {
