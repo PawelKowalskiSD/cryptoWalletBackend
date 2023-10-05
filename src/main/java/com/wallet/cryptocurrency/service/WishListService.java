@@ -33,4 +33,8 @@ public class WishListService {
     public List<WishList> findWishListByAllUserId(Long id) {
         return wishListRepository.findAllByUser_UserId(id);
     }
+
+    public void deleteWishList(Long wishListId){
+        wishListRepository.deleteById(wishListId);
+    }
 }

@@ -9,6 +9,7 @@ import com.wallet.cryptocurrency.exceptions.UserPermissionsException;
 import com.wallet.cryptocurrency.facade.DashboardFacade;
 import com.wallet.cryptocurrency.mapper.UserMapper;
 import com.wallet.cryptocurrency.service.UserService;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RequiredArgsConstructor
 @RequestMapping("/users")
 @RestController

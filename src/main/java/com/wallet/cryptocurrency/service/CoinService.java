@@ -5,7 +5,6 @@ import com.wallet.cryptocurrency.dto.CreateCoinDataDto;
 import com.wallet.cryptocurrency.dto.SellCoinDataDto;
 import com.wallet.cryptocurrency.entity.Coin;
 import com.wallet.cryptocurrency.entity.Wallet;
-import com.wallet.cryptocurrency.entity.WishList;
 import com.wallet.cryptocurrency.repository.CoinRepository;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -25,13 +24,12 @@ public class CoinService {
     private static final String COIN_GECKO_API_BASE_URL = "https://api.coingecko.com/api/v3";
     private final CoinRepository coinRepository;
 
-    private final RestTemplate restTemplate;
-
     public void getCoinByNameFromApi(String name, BigDecimal quantity, Wallet walletList) {
 
         String apiUrl = COIN_GECKO_API_BASE_URL + "/coins/markets?vs_currency=usd&ids=" + name;
         RestTemplate restTemplate = new RestTemplate();
         CreateCoinDataDto[] tokenData = restTemplate.getForObject(apiUrl, CreateCoinDataDto[].class);
+        Coin coin = new Coin();
         if (tokenData != null && tokenData.length > 0) {
 
             CreateCoinDataDto createCoinDataDto = tokenData[0];
@@ -46,7 +44,7 @@ public class CoinService {
 
                 coinRepository.save(existingCoin);
             } else {
-                Coin coin = new Coin();
+
                 coin.setCoinName(createCoinDataDto.getCoinName());
                 coin.setSymbol(createCoinDataDto.getSymbol());
                 coin.setQuantity(quantity.setScale(5, RoundingMode.HALF_DOWN));
@@ -122,10 +120,11 @@ public class CoinService {
         coin.setCirculatingSupply(createCoinDataDto.getCirculatingSupply());
     }
 
-    public void addCoinToWishList(String name, BigDecimal quantity, WishList wishList, AddCoinToWishlistDto coinToWishlistDto) {
+    public void addCoinToWishList(String name, BigDecimal quantity, Long wishListId, AddCoinToWishlistDto coinToWishlistDto) {
         String apiUrl = COIN_GECKO_API_BASE_URL + "/coins/markets?vs_currency=usd&ids=" + name;
         RestTemplate restTemplate = new RestTemplate();
         AddCoinToWishlistDto[] tokenData = restTemplate.getForObject(apiUrl, AddCoinToWishlistDto[].class);
+        Coin coin = new Coin();
         if (tokenData != null && tokenData.length > 0) {
             AddCoinToWishlistDto addCoinToWishlistDto = tokenData[0];
             String coinName = addCoinToWishlistDto.getCoinName();
@@ -140,14 +139,14 @@ public class CoinService {
 
                 coinRepository.save(existingCoin);
             } else {
-                Coin coin = new Coin();
+
                 coin.setCoinName(addCoinToWishlistDto.getCoinName());
                 coin.setQuantity(quantity);
                 coin.setPurchaseWishPrice(coinToWishlistDto.getPurchaseWishPrice().setScale(5, RoundingMode.HALF_DOWN));
                 coin.setSymbol(addCoinToWishlistDto.getSymbol());
                 setWishListsStatistics(addCoinToWishlistDto, coin);
 
-                wishList.getCoinWishList().add(coin);
+//               wishList.getCoinWishList().add(coin);
                 coinRepository.save(coin);
             }
         }

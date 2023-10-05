@@ -57,10 +57,10 @@ public class CoinController {
     @PostMapping(value = "/{wishListId}/add-coins-to-wish-lists")
     public ResponseEntity<AddCoinToWishlistDto> addCoinToWishList(@PathVariable Long wishListId, @RequestBody AddCoinToWishlistDto addCoinToWishlistDto, Authentication authentication) throws UserNotFoundException, WishListNotFoundException, UserPermissionsException {
         Long userId = configAuthentication.getUserIdFromAuthentication(authentication);
-        WishList wishList = wishListService.findByWishListIdAndUserId(wishListId, userId);
+//        WishList wishList = wishListService.findByWishListIdAndUserId(wishListId, userId);
         BigDecimal quantity = addCoinToWishlistDto.getQuantity().setScale(5, RoundingMode.HALF_DOWN);
         String name = addCoinToWishlistDto.getCoinName();
-        coinService.addCoinToWishList(name, quantity, wishList, addCoinToWishlistDto);
+        coinService.addCoinToWishList(name, quantity, wishListId, addCoinToWishlistDto);
         return ResponseEntity.ok().build();
     }
 

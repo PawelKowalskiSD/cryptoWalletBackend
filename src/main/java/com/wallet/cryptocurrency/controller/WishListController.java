@@ -52,6 +52,7 @@ public class WishListController {
     public ResponseEntity<Void> deleteWishList(@PathVariable Long wishListId, Authentication authentication) throws UserPermissionsException, UserNotFoundException, WishListNotFoundException {
         Long userId = configAuthentication.getUserIdFromAuthentication(authentication);
         wishListService.findByWishListIdAndUserId(wishListId, userId);
+        wishListService.deleteWishList(wishListId);
         return ResponseEntity.ok().build();
     }
 }

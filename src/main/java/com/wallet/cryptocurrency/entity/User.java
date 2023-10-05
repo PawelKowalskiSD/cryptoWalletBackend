@@ -1,12 +1,10 @@
 package com.wallet.cryptocurrency.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.http.MediaType;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +16,8 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "USER")
 public class User implements UserDetails {
@@ -91,6 +90,16 @@ public class User implements UserDetails {
 
     public User(Long userId, String firstname, String lastname, String username, String password, String mailAddressee, boolean isEnabled, String role) {
         this.userId = userId;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.username = username;
+        this.password = password;
+        this.mailAddressee = mailAddressee;
+        this.isEnabled = isEnabled;
+        this.role = role;
+    }
+
+    public User(String firstname, String lastname, String username, String password, String mailAddressee, boolean isEnabled, String role) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.username = username;
